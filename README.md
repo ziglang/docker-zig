@@ -23,7 +23,7 @@ the code, and the other with your editor of choice.
 
 ```
 docker build -t zig .
-ZIG_VERSION=0.0.0-$(git ls-remote https://github.com/zig-lang/zig | sed 's/\tHEAD//')
+ZIG_VERSION=0.0.0-$(git ls-remote https://github.com/zig-lang/zig | head -n 1 | sed 's/\tHEAD//')
 docker tag zig tiehuis/zig:$ZIG_VERSION
 docker push tiehuis/zig:$ZIG_VERSION
 ```
