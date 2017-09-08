@@ -8,17 +8,22 @@ RUN apt-get update && \
         build-essential \
         zlib1g-dev \
         python \
+        wget \
+        xz-utils \
         libquadmath0 \
     && \
     mkdir -p /deps && \
     cd /deps && \
-    git clone --depth 1 --branch release_50 https://github.com/llvm-project/llvm-project-20170507 llvm-project && \
-    mkdir -p /deps/llvm-project/llvm/build && \
-    cd /deps/llvm-project/llvm/build && \
+    wget http://releases.llvm.org/5.0.0/llvm-5.0.0.src.tar.xz && \
+    tar xf llvm-5.0.0.src.tar.xz && \
+    mkdir -p /deps/llvm-5.0.0.src/build && \
+    cd /deps/llvm-5.0.0.src/build && \
     cmake .. -DCMAKE_INSTALL_PREFIX=/deps/local -DCMAKE_PREFIX_PATH=/deps/local -DCMAKE_BUILD_TYPE=Release && \
     make install && \
-    mkdir -p /deps/llvm-project/clang/build && \
-    cd /deps/llvm-project/clang/build && \
+    wget http://releases.llvm.org/5.0.0/cfe-5.0.0.src.tar.xz && \
+    tar xf cfe-5.0.0.src.tar.xz && \
+    mkdir -p /deps/cfe-5.0.0.src/build && \
+    cd /deps/cfe-5.0.0.src/build && \
     cmake .. -DCMAKE_INSTALL_PREFIX=/deps/local -DCMAKE_PREFIX_PATH=/deps/local -DCMAKE_BUILD_TYPE=Release && \
     make install && \
     cd /deps && \
@@ -34,9 +39,11 @@ RUN apt-get update && \
         -DCMAKE_PREFIX_PATH=/deps/local                                        \
     && \
     make install && \
+    wget -O ~/.zig.bash_completion https://raw.githubusercontent.com/tiehuis/zig-compiler-completions/master/completions/zig.bash-completion && \
+    echo "source $HOME/.zig.bash_completion" >> "$HOME/.bashrc" && \
     cd / && \
     rm -rf /deps && \
-    apt-get remove -y ca-certificates git cmake build-essential zlib1g-dev python && \
+    apt-get remove -y ca-certificates git cmake build-essential zlib1g-dev python xz-utils wget && \
     apt-get autoremove -y && \
     apt-get clean
 
