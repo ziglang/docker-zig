@@ -23,7 +23,7 @@ artifacts using the current users permissions.
 alias zigi='docker run --rm -it -u "$UID:$(id -g)" -v /etc/passwd:/etc/passwd:ro -v /etc/group:/etc/group:ro -v "$(pwd)":/z zig bash'
 ```
 
-It is suggest to use two terminal sessions, one with the docker image compiling
+It is suggested to use two terminal sessions, one with the docker image compiling
 the code, and the other with your editor of choice.
 
 ## update

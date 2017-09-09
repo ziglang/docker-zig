@@ -20,6 +20,7 @@ RUN apt-get update && \
     cd /deps/llvm-5.0.0.src/build && \
     cmake .. -DCMAKE_INSTALL_PREFIX=/deps/local -DCMAKE_PREFIX_PATH=/deps/local -DCMAKE_BUILD_TYPE=Release && \
     make install && \
+    cd /deps && \
     wget http://releases.llvm.org/5.0.0/cfe-5.0.0.src.tar.xz && \
     tar xf cfe-5.0.0.src.tar.xz && \
     mkdir -p /deps/cfe-5.0.0.src/build && \
@@ -39,7 +40,7 @@ RUN apt-get update && \
         -DCMAKE_PREFIX_PATH=/deps/local                                        \
     && \
     make install && \
-    wget -O ~/.zig.bash_completion https://raw.githubusercontent.com/tiehuis/zig-compiler-completions/master/completions/zig.bash-completion && \
+    wget -O "$HOME/.zig.bash_completion" https://raw.githubusercontent.com/tiehuis/zig-compiler-completions/master/completions/zig.bash-completion && \
     echo "source $HOME/.zig.bash_completion" >> "$HOME/.bashrc" && \
     cd / && \
     rm -rf /deps && \
