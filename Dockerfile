@@ -9,8 +9,7 @@ RUN apt-get update && \
         zlib1g-dev \
         python \
         wget \
-        xz-utils \
-        libquadmath0
+        xz-utils
 
 RUN mkdir -p /deps
 
