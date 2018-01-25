@@ -29,12 +29,8 @@ the code, and the other with your editor of choice.
 ## update
 
 ```
-docker build -t zig .
-ZIG_VERSION=0.0.0-$(git ls-remote https://github.com/zig-lang/zig | head -n 1 | sed 's/\tHEAD//')
-
-docker tag zig ziglang/zig:$ZIG_VERSION
-docker tag zig ziglang/zig:latest
-
-docker push ziglang/zig:$ZIG_VERSION
-docker push ziglang/zig:latest
+# Branch can be master, or a tag i.e. 0.1.0
+export ZIG_BRANCH=master
+docker build -t ziglang/zig:$ZIG_BRANCH --build-arg ZIG_BRANCH=$ZIG_BRANCH .
+docker push ziglang/zig:$ZIG_BRANCH
 ```
