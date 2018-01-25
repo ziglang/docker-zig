@@ -56,4 +56,4 @@ COPY --from=builder /usr/bin/zig /usr/bin/zig
 COPY --from=builder /usr/lib/zig /usr/lib/zig
 WORKDIR /z
 
-CMD ["zig"]
+ENTRYPOINT ["zig"]
