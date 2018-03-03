@@ -31,6 +31,7 @@ the code, and the other with your editor of choice.
 ```
 # Branch can be master, or a tag i.e. 0.1.0
 export ZIG_BRANCH=master
-docker build -t ziglang/zig:$ZIG_BRANCH --build-arg ZIG_BRANCH=$ZIG_BRANCH .
+# You only need to invalidate the cache if you are rebuilding master later
+docker build -t ziglang/zig:$ZIG_BRANCH --build-arg ZIG_BRANCH=$ZIG_BRANCH --build-arg CACHE_DATE=$(date) .
 docker push ziglang/zig:$ZIG_BRANCH
 ```

@@ -36,6 +36,7 @@ RUN make install
 ARG ZIG_BRANCH=master
 
 WORKDIR /deps
+ARG CACHE_DATE=2018-03-04
 RUN git clone --branch $ZIG_BRANCH --depth 1 https://github.com/zig-lang/zig
 RUN mkdir -p /deps/zig/build
 WORKDIR /deps/zig/build
