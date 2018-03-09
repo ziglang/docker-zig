@@ -15,19 +15,19 @@ RUN mkdir -p /deps
 
 # llvm
 WORKDIR /deps
-RUN wget http://releases.llvm.org/5.0.1/llvm-5.0.1.src.tar.xz
-RUN tar xf llvm-5.0.1.src.tar.xz
-RUN mkdir -p /deps/llvm-5.0.1.src/build
-WORKDIR /deps/llvm-5.0.1.src/build
+RUN wget http://releases.llvm.org/6.0.0/llvm-6.0.0.src.tar.xz
+RUN tar xf llvm-6.0.0.src.tar.xz
+RUN mkdir -p /deps/llvm-6.0.0.src/build
+WORKDIR /deps/llvm-6.0.0.src/build
 RUN cmake .. -DCMAKE_INSTALL_PREFIX=/deps/local -DCMAKE_PREFIX_PATH=/deps/local -DCMAKE_BUILD_TYPE=Release
 RUN make install
 
 # clang
 WORKDIR /deps
-RUN wget http://releases.llvm.org/5.0.1/cfe-5.0.1.src.tar.xz
-RUN tar xf cfe-5.0.1.src.tar.xz
-RUN mkdir -p /deps/cfe-5.0.1.src/build
-WORKDIR /deps/cfe-5.0.1.src/build
+RUN wget http://releases.llvm.org/6.0.0/cfe-6.0.0.src.tar.xz
+RUN tar xf cfe-6.0.0.src.tar.xz
+RUN mkdir -p /deps/cfe-6.0.0.src/build
+WORKDIR /deps/cfe-6.0.0.src/build
 RUN cmake .. -DCMAKE_INSTALL_PREFIX=/deps/local -DCMAKE_PREFIX_PATH=/deps/local -DCMAKE_BUILD_TYPE=Release
 RUN make install
 
