@@ -13,7 +13,8 @@ RUN apk update && \
         libc-dev \
         binutils \
         zlib-dev \
-        libstdc++
+        libstdc++ \
+        libxml2-dev
 
 RUN mkdir -p /deps
 
