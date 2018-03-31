@@ -19,7 +19,7 @@ Index: lib/WindowsManifest/CMakeLists.txt
  if( CMAKE_HOST_UNIX )
    if( LLVM_LIBXML2_ENABLED )
 -    set(system_libs ${system_libs} ${LIBXML2_LIBS})
-+    set(system_libs ${system_libs} ${LIBXML2_LIBRARIES})
++    set(system_libs ${system_libs} ${LIBXML2_LIBRARIES} ${ZLIB_LIBRARIES})
    endif()
  endif()
  
