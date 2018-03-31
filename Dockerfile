@@ -13,8 +13,7 @@ RUN apk update && \
         libc-dev \
         binutils \
         zlib-dev \
-        libstdc++ \
-        libxml2-dev
+        libstdc++
 
 RUN mkdir -p /deps
 
@@ -31,6 +30,9 @@ RUN make install
 WORKDIR /deps
 RUN wget http://releases.llvm.org/6.0.0/llvm-6.0.0.src.tar.xz
 RUN tar xf llvm-6.0.0.src.tar.xz
+WORKDIR /deps/llvm-6.0.0.src/
+COPY llvm-fix-libxml2-dep.patch ./
+RUN patch -p1 llvm-fix-libxml2-dep.patch
 RUN mkdir -p /deps/llvm-6.0.0.src/build
 WORKDIR /deps/llvm-6.0.0.src/build
 RUN cmake .. -DCMAKE_INSTALL_PREFIX=/deps/local -DCMAKE_PREFIX_PATH=/deps/local -DCMAKE_BUILD_TYPE=Release -DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD=WebAssembly
