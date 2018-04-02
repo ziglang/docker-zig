@@ -1,0 +1,26 @@
+#!/bin/sh
+
+set -e
+
+MAKE_JOBS="$1"
+COMMIT="$2"
+
+cd /deps
+git clone https://github.com/zig-lang/zig
+cd /deps/zig
+git checkout "$COMMIT"
+mkdir -p /deps/zig/build
+cd /deps/zig/build
+cmake .. -DZIG_STATIC=on -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=/deps/local -DCMAKE_INSTALL_PREFIX=/deps/install
+make "$MAKE_JOBS" install
+/deps/install/bin/zig build --build-file ../build.zig test
+mv ../zig-cache/langref.html /deps/install/
+
+cd /deps
+mv install/bin/zig install/
+rmdir install/bin
+VERSION="$(install/zig version)"
+DIRNAME="zig-linux-x86_64-$VERSION"
+mv install "$DIRNAME"
+tar cfJ "$DIRNAME.tar.xz" "$DIRNAME"
+mv "$DIRNAME.tar.xz" /z/

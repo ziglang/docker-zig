@@ -1,37 +1,37 @@
 # docker-zig
 
-## usage
+The goal of this docker image is to build a fully static Zig Linux x86_64
+executable, which can then be used on any Linux system (or inside any
+docker container).
+
+After building zig and running the test suite, it produces
+`zig-linux-x86_64-X.Y.Z-commitsha.tar.xz` which contains:
+
+ * `/langref.html` (generated documentation)
+ * `/zig` (statically linked executable)
+ * `/lib` (installed zig std lib and c headers)
+
+Therefore, this docker image is used to produce this artifact, and
+not intended to be used directly.
+
+## Usage
+
+In this example:
+
+ * `-j1` is a number of make jobs. Set to the number of cores you want to use.
+ * `7d66908f294eed1138802c060185721a2e265f3b` is the Zig git revision to
+   build, test, and package.
 
 ```
-docker pull ziglang/zig:latest
+docker run --rm -it -v output:/z ziglang/static-base:llvm6-1 -j1 7d66908f294eed1138802c060185721a2e265f3b
 ```
 
-The intended workflow is to run this image interactively, mounting the `pwd` to
-persist any created artifacts to the host machine. Artifacts should be run from
-within the image for consistency, but programs may work outside alright.
+### Updating the base image
 
-The following alias is useful for entering an interactive session.
-
-```
-alias zigi='docker run --rm -it -v "$(pwd)":/z zig bash'
-```
-
-If using a posix os, strongly consider using the following which will create
-artifacts using the current users permissions.
+This only needs to be done if we need to tweak the build environment, or if
+we update the LLVM or Clang dependencies.
 
 ```
-alias zigi='docker run --rm -it -u "$UID:$(id -g)" -v /etc/passwd:/etc/passwd:ro -v /etc/group:/etc/group:ro -v "$(pwd)":/z zig bash'
-```
-
-It is suggested to use two terminal sessions, one with the docker image compiling
-the code, and the other with your editor of choice.
-
-## update
-
-```
-# Branch can be master, or a tag i.e. 0.1.0
-export ZIG_BRANCH=master
-# You only need to invalidate the cache if you are rebuilding master later
-docker build -t ziglang/zig:$ZIG_BRANCH --build-arg ZIG_BRANCH=$ZIG_BRANCH --build-arg CACHE_DATE=$(date) .
-docker push ziglang/zig:$ZIG_BRANCH
+docker build -t ziglang/static-base:llvm6-1 .
+docker push ziglang/static-base:llvm6-1
 ```
