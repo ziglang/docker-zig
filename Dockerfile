@@ -60,8 +60,11 @@ RUN apk update && \
         binutils \
         zlib-dev \
         libstdc++ \
-        git
-COPY --from=builder /deps/local /deps/local
+        git \
+        xz
+COPY --from=builder /deps/local/lib /deps/local/lib
+COPY --from=builder /deps/local/include /deps/local/include
+COPY --from=builder /deps/local/bin/llvm-config /deps/local/bin/llvm-config
 COPY build /deps/build
 
 ENTRYPOINT ["/deps/build"]
