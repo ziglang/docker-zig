@@ -32,6 +32,6 @@ This only needs to be done if we need to tweak the build environment, or if
 we update the LLVM or Clang dependencies.
 
 ```
-docker build -t ziglang/static-base:llvm6-1 .
-docker push ziglang/static-base:llvm6-1
+docker build -t ziglang/static-base:llvm7-1 .
+docker push ziglang/static-base:llvm7-1
 ```

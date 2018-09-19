@@ -2,10 +2,10 @@ Index: cmake/config-ix.cmake
 ===================================================================
 --- cmake/config-ix.cmake	(revision 326679)
 +++ cmake/config-ix.cmake	(working copy)
-@@ -174,7 +174,6 @@
-       if (LIBXML2_FOUND)
-         set(LLVM_LIBXML2_ENABLED 1)
-         include_directories(${LIBXML2_INCLUDE_DIR})
+@@ -153,7 +153,6 @@
+         else()
+           include_directories(${LIBXML2_INCLUDE_DIR})
+         endif()
 -        set(LIBXML2_LIBS "xml2")
        endif()
      endif()
