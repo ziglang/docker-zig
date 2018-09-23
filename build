@@ -15,6 +15,7 @@ cmake .. -DZIG_STATIC=on -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=/deps/lo
 make "$MAKE_JOBS" install
 /deps/install/bin/zig build --build-file ../build.zig docs
 mv /deps/zig/zig-cache/langref.html /deps/install/
+mv /deps/zig/LICENSE /deps/install/
 
 cd /deps
 mv install/bin/zig install/
