@@ -36,7 +36,7 @@ COPY llvm-fix-libxml2-dep.patch ./
 RUN patch -p0 -i llvm-fix-libxml2-dep.patch
 RUN mkdir -p /deps/llvm-7.0.0.src/build
 WORKDIR /deps/llvm-7.0.0.src/build
-RUN cmake .. -DCMAKE_INSTALL_PREFIX=/deps/local -DCMAKE_PREFIX_PATH=/deps/local -DCMAKE_BUILD_TYPE=Release -DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD=WebAssembly
+RUN cmake .. -DCMAKE_INSTALL_PREFIX=/deps/local -DCMAKE_PREFIX_PATH=/deps/local -DCMAKE_BUILD_TYPE=Release -DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD="WebAssembly;AVR;RISCV"
 RUN make $MAKE_JOBS install
 
 # clang
