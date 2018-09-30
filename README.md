@@ -10,6 +10,7 @@ After building zig and running the test suite, it produces
  * `/langref.html` (generated documentation)
  * `/zig` (statically linked executable)
  * `/lib` (installed zig std lib and c headers)
+ * `/LICENSE` (copied from zig repo)
 
 Therefore, this docker image is used to produce this artifact, and
 not intended to be used directly.
