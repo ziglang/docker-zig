@@ -4,6 +4,7 @@ set -e
 
 MAKE_JOBS="$1"
 COMMIT="$2"
+ARCH="$(uname -m)"
 
 cd /deps
 git clone https://github.com/zig-lang/zig
@@ -21,7 +22,7 @@ cd /deps
 mv install/bin/zig install/
 rmdir install/bin
 VERSION="$(install/zig version)"
-DIRNAME="zig-linux-x86_64-$VERSION"
+DIRNAME="zig-linux-$ARCH-$VERSION"
 mv install "$DIRNAME"
 tar cfJ "$DIRNAME.tar.xz" "$DIRNAME"
 mv "$DIRNAME.tar.xz" /z/
