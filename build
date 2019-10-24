@@ -14,7 +14,7 @@ mkdir -p /deps/zig/build
 cd /deps/zig/build
 cmake .. -DZIG_STATIC=on -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=/deps/local -DCMAKE_INSTALL_PREFIX=/deps/install
 make "$MAKE_JOBS" install
-/deps/install/bin/zig build --build-file ../build.zig docs
+/deps/install/bin/zig build docs
 mv /deps/zig/zig-cache/langref.html /deps/install/
 mv /deps/zig/LICENSE /deps/install/
 
