@@ -23,7 +23,7 @@ In this example:
    build, test, and package.
 
 ```
-docker run --rm -it --mount type=bind,source="$(pwd)",target=/z ziglang/static-base:llvm10-1 -j1 7d66908f294eed1138802c060185721a2e265f3b
+docker run --rm -it --mount type=bind,source="$(pwd)",target=/z ziglang/static-base:llvm10-$(uname -m)-1 -j1 7d66908f294eed1138802c060185721a2e265f3b
 ```
 
 ### Updating the base image
@@ -32,6 +32,6 @@ This only needs to be done if we need to tweak the build environment, or if
 we update the LLVM or Clang dependencies.
 
 ```
-docker build -t ziglang/static-base:llvm10-$(uname -m)-1 .
+docker build --build-arg MAKE_JOBS=-j$(nproc) -t ziglang/static-base:llvm10-$(uname -m)-1 .
 docker push ziglang/static-base:llvm10-$(uname -m)-1
 ```
