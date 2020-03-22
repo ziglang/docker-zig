@@ -1,11 +1,10 @@
 # docker-zig
 
-The goal of this docker image is to build a fully static Zig Linux x86_64
-executable, which can then be used on any Linux system (or inside any
-docker container).
+The goal of this docker image is to build a fully static Zig Linux executable,
+which can then be used on any Linux system (or inside any docker container).
 
 After building zig and running the test suite, it produces
-`zig-linux-x86_64-X.Y.Z-commitsha.tar.xz` which contains:
+`zig-linux-$ARCH-$VER-$COMMITSHA.tar.xz` which contains:
 
  * `/langref.html` (generated documentation)
  * `/zig` (statically linked executable)
@@ -24,7 +23,7 @@ In this example:
    build, test, and package.
 
 ```
-docker run --rm -it --mount type=bind,source="$(pwd)",target=/z ziglang/static-base:llvm9-1 -j1 7d66908f294eed1138802c060185721a2e265f3b
+docker run --rm -it --mount type=bind,source="$(pwd)",target=/z ziglang/static-base:llvm10-1 -j1 7d66908f294eed1138802c060185721a2e265f3b
 ```
 
 ### Updating the base image
@@ -33,6 +32,6 @@ This only needs to be done if we need to tweak the build environment, or if
 we update the LLVM or Clang dependencies.
 
 ```
-docker build -t ziglang/static-base:llvm9-1 .
-docker push ziglang/static-base:llvm9-1
+docker build -t ziglang/static-base:llvm10-$(uname -m)-1 .
+docker push ziglang/static-base:llvm10-$(uname -m)-1
 ```
