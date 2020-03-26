@@ -31,6 +31,8 @@ docker run --rm -it --mount type=bind,source="$(pwd)",target=/z ziglang/static-b
 This only needs to be done if we need to tweak the build environment, or if
 we update the LLVM or Clang dependencies.
 
+Decide whether to bump the base alpine image version.
+
 ```
 docker build --build-arg MAKE_JOBS=-j$(nproc) -t ziglang/static-base:llvm10-$(uname -m)-1 .
 docker push ziglang/static-base:llvm10-$(uname -m)-1

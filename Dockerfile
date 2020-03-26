@@ -1,4 +1,4 @@
-FROM alpine:edge as builder
+FROM alpine:3.11 as builder
 
 RUN apk update && \
     apk add \
@@ -45,7 +45,7 @@ WORKDIR /deps/clang-10.0.0.src/build
 RUN cmake .. -DCMAKE_INSTALL_PREFIX=/deps/local -DCMAKE_PREFIX_PATH=/deps/local -DCMAKE_BUILD_TYPE=Release
 RUN make $MAKE_JOBS install
 
-FROM alpine:edge
+FROM alpine:3.11
 RUN apk update && \
     apk add \
         gcc \
