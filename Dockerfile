@@ -20,7 +20,7 @@ ARG MAKE_JOBS=-j1
 
 # llvm
 WORKDIR /deps
-RUN wget http://releases.llvm.org/10.0.0/llvm-10.0.0.src.tar.xz
+RUN wget https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0/llvm-10.0.0.src.tar.xz
 RUN tar xf llvm-10.0.0.src.tar.xz
 RUN mkdir -p /deps/llvm-10.0.0.src/build
 WORKDIR /deps/llvm-10.0.0.src/build
@@ -29,7 +29,7 @@ RUN make $MAKE_JOBS install
 
 # lld
 WORKDIR /deps
-RUN wget http://releases.llvm.org/10.0.0/lld-10.0.0.src.tar.xz
+RUN wget https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0/lld-10.0.0.src.tar.xz
 RUN tar xf lld-10.0.0.src.tar.xz
 RUN mkdir -p /deps/lld-10.0.0.src/build
 WORKDIR /deps/lld-10.0.0.src/build
@@ -38,7 +38,7 @@ RUN make $MAKE_JOBS install
 
 # clang
 WORKDIR /deps
-RUN wget http://releases.llvm.org/10.0.0/clang-10.0.0.src.tar.xz
+RUN wget https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0/clang-10.0.0.src.tar.xz
 RUN tar xf clang-10.0.0.src.tar.xz
 RUN mkdir -p /deps/clang-10.0.0.src/build
 WORKDIR /deps/clang-10.0.0.src/build
