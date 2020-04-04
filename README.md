@@ -34,6 +34,6 @@ we update the LLVM or Clang dependencies.
 Decide whether to bump the base alpine image version.
 
 ```
-docker build --build-arg MAKE_JOBS=-j$(nproc) -t ziglang/static-base:llvm10-$(uname -m)-1 .
+docker build -t ziglang/static-base:llvm10-$(uname -m)-1 .
 docker push ziglang/static-base:llvm10-$(uname -m)-1
 ```

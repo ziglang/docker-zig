@@ -9,14 +9,13 @@ RUN apk update && \
         pkgconfig \
         python2-dev \
         cmake \
-        make \
+        ninja \
         libc-dev \
         binutils \
         zlib-static \
         libstdc++
 
 RUN mkdir -p /deps
-ARG MAKE_JOBS=-j1
 
 # llvm
 WORKDIR /deps
@@ -24,8 +23,8 @@ RUN wget https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0/l
 RUN tar xf llvm-10.0.0.src.tar.xz
 RUN mkdir -p /deps/llvm-10.0.0.src/build
 WORKDIR /deps/llvm-10.0.0.src/build
-RUN cmake .. -DCMAKE_INSTALL_PREFIX=/deps/local -DCMAKE_PREFIX_PATH=/deps/local -DCMAKE_BUILD_TYPE=Release -DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD="AVR" -DLLVM_ENABLE_LIBXML2=OFF -DLLVM_ENABLE_TERMINFO=OFF
-RUN make $MAKE_JOBS install
+RUN cmake .. -DCMAKE_INSTALL_PREFIX=/deps/local -DCMAKE_PREFIX_PATH=/deps/local -DCMAKE_BUILD_TYPE=Release -DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD="AVR" -DLLVM_ENABLE_LIBXML2=OFF -DLLVM_ENABLE_TERMINFO=OFF -G Ninja
+RUN ninja install
 
 # lld
 WORKDIR /deps
@@ -33,8 +32,8 @@ RUN wget https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0/l
 RUN tar xf lld-10.0.0.src.tar.xz
 RUN mkdir -p /deps/lld-10.0.0.src/build
 WORKDIR /deps/lld-10.0.0.src/build
-RUN cmake .. -DCMAKE_INSTALL_PREFIX=/deps/local -DCMAKE_PREFIX_PATH=/deps/local -DCMAKE_BUILD_TYPE=Release
-RUN make $MAKE_JOBS install
+RUN cmake .. -DCMAKE_INSTALL_PREFIX=/deps/local -DCMAKE_PREFIX_PATH=/deps/local -DCMAKE_BUILD_TYPE=Release -G Ninja
+RUN ninja install
 
 # clang
 WORKDIR /deps
@@ -42,8 +41,8 @@ RUN wget https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0/c
 RUN tar xf clang-10.0.0.src.tar.xz
 RUN mkdir -p /deps/clang-10.0.0.src/build
 WORKDIR /deps/clang-10.0.0.src/build
-RUN cmake .. -DCMAKE_INSTALL_PREFIX=/deps/local -DCMAKE_PREFIX_PATH=/deps/local -DCMAKE_BUILD_TYPE=Release
-RUN make $MAKE_JOBS install
+RUN cmake .. -DCMAKE_INSTALL_PREFIX=/deps/local -DCMAKE_PREFIX_PATH=/deps/local -DCMAKE_BUILD_TYPE=Release -G Ninja
+RUN ninja install
 
 FROM alpine:3.11
 RUN apk update && \
