@@ -7,7 +7,7 @@ COMMIT="$2"
 ARCH="$(uname -m)"
 
 cd /deps
-git clone https://github.com/zig-lang/zig
+git clone https://github.com/zig-lang/zig --depth=1
 cd /deps/zig
 git checkout "$COMMIT"
 mkdir -p /deps/zig/build
