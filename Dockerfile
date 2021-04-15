@@ -1,4 +1,4 @@
-FROM alpine:3.12 as builder
+FROM alpine:3.13 as builder
 
 RUN apk update && \
     apk add \
@@ -7,49 +7,45 @@ RUN apk update && \
         automake \
         autoconf \
         pkgconfig \
-        python2-dev \
+        python3-dev \
         cmake \
         ninja \
         libc-dev \
         binutils \
         zlib-static \
-        libstdc++
+        libstdc++ \
+        git
 
 RUN mkdir -p /deps
+WORKDIR /deps
+RUN git clone https://github.com/llvm/llvm-project/ && \
+    cd llvm-project && \
+    git checkout release/12.x && \
+    mkdir llvm/build && \
+    mkdir lld/build && \
+    mkdir clang/build
 
 # llvm
-WORKDIR /deps
-RUN wget https://github.com/llvm/llvm-project/releases/download/llvmorg-11.0.0/llvm-11.0.0.src.tar.xz
-RUN tar xf llvm-11.0.0.src.tar.xz
-RUN mkdir -p /deps/llvm-11.0.0.src/build
-WORKDIR /deps/llvm-11.0.0.src/build
-RUN cmake .. -DCMAKE_INSTALL_PREFIX=/deps/local -DCMAKE_PREFIX_PATH=/deps/local -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_LIBXML2=OFF -DLLVM_ENABLE_TERMINFO=OFF -G Ninja
+WORKDIR /deps/llvm-project/llvm/build
+RUN cmake .. -DCMAKE_INSTALL_PREFIX=/deps/local -DCMAKE_PREFIX_PATH=/deps/local -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_LIBXML2=OFF -DLLVM_ENABLE_TERMINFO=OFF -GNinja
 RUN ninja install
 
 # lld
-WORKDIR /deps
-RUN wget https://github.com/llvm/llvm-project/releases/download/llvmorg-11.0.0/lld-11.0.0.src.tar.xz
-RUN tar xf lld-11.0.0.src.tar.xz
-RUN mkdir -p /deps/lld-11.0.0.src/build
-WORKDIR /deps/lld-11.0.0.src/build
-RUN cmake .. -DCMAKE_INSTALL_PREFIX=/deps/local -DCMAKE_PREFIX_PATH=/deps/local -DCMAKE_BUILD_TYPE=Release -G Ninja
+WORKDIR /deps/llvm-project/lld/build
+RUN cmake .. -DCMAKE_INSTALL_PREFIX=/deps/local -DCMAKE_PREFIX_PATH=/deps/local -DCMAKE_BUILD_TYPE=Release -GNinja
 RUN ninja install
 
 # clang
-WORKDIR /deps
-RUN wget https://github.com/llvm/llvm-project/releases/download/llvmorg-11.0.0/clang-11.0.0.src.tar.xz
-RUN tar xf clang-11.0.0.src.tar.xz
-RUN mkdir -p /deps/clang-11.0.0.src/build
-WORKDIR /deps/clang-11.0.0.src/build
-RUN cmake .. -DCMAKE_INSTALL_PREFIX=/deps/local -DCMAKE_PREFIX_PATH=/deps/local -DCMAKE_BUILD_TYPE=Release -G Ninja
+WORKDIR /deps/llvm-project/clang/build
+RUN cmake .. -DCMAKE_INSTALL_PREFIX=/deps/local -DCMAKE_PREFIX_PATH=/deps/local -DCMAKE_BUILD_TYPE=Release -GNinja
 RUN ninja install
 
-FROM alpine:3.12
+FROM alpine:3.13
 RUN apk update && \
     apk add \
         gcc \
         g++ \
-        python2-dev \
+        python3-dev \
         cmake \
         make \
         libc-dev \

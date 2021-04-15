@@ -23,7 +23,7 @@ In this example:
    build, test, and package.
 
 ```
-docker run --rm -it --mount type=bind,source="$(pwd)",target=/z ziglang/static-base:llvm11-$(uname -m)-1 -j1 7d66908f294eed1138802c060185721a2e265f3b
+docker run --rm -it --mount type=bind,source="$(pwd)",target=/z ziglang/static-base:llvm12-$(uname -m)-1 -j1 7d66908f294eed1138802c060185721a2e265f3b
 ```
 
 ### Updating the base image
@@ -34,6 +34,6 @@ we update the LLVM or Clang dependencies.
 Decide whether to bump the base alpine image version.
 
 ```
-docker build -t ziglang/static-base:llvm11-$(uname -m)-1 .
-docker push ziglang/static-base:llvm11-$(uname -m)-1
+docker build -t ziglang/static-base:llvm12-$(uname -m)-1 .
+docker push ziglang/static-base:llvm12-$(uname -m)-1
 ```
