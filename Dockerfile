@@ -13,6 +13,7 @@ RUN apk update && \
         libc-dev \
         binutils \
         zlib-static \
+        zlib-dev \
         libstdc++ \
         git
 
@@ -27,7 +28,15 @@ RUN git clone https://github.com/llvm/llvm-project/ && \
 
 # llvm
 WORKDIR /deps/llvm-project/llvm/build
-RUN cmake .. -DCMAKE_INSTALL_PREFIX=/deps/local -DCMAKE_PREFIX_PATH=/deps/local -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_LIBXML2=OFF -DLLVM_ENABLE_TERMINFO=OFF -GNinja
+RUN cmake .. \
+    -DCMAKE_INSTALL_PREFIX=/deps/local \
+    -DCMAKE_PREFIX_PATH=/deps/local \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DLLVM_ENABLE_LIBXML2=OFF \
+    -DLLVM_ENABLE_TERMINFO=OFF \
+    -DZLIB_LIBRARY=/lib/libz.a \
+    -DLLVM_ENABLE_ZLIB=FORCE_ON \
+    -GNinja
 RUN ninja install
 
 # lld
@@ -51,6 +60,7 @@ RUN apk update && \
         libc-dev \
         binutils \
         zlib-static \
+        zlib-dev \
         libstdc++ \
         git \
         xz

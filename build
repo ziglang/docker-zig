@@ -12,7 +12,11 @@ cd /deps/zig
 git checkout "$COMMIT"
 mkdir -p /deps/zig/build
 cd /deps/zig/build
-cmake .. -DZIG_STATIC=on -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=/deps/local -DCMAKE_INSTALL_PREFIX=/deps/install
+cmake .. \
+    -DZIG_STATIC=on \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_PREFIX_PATH=/deps/local \
+    -DCMAKE_INSTALL_PREFIX=/deps/install
 make "$MAKE_JOBS" install
 ./zig build docs
 mv ../zig-cache/langref.html /deps/install/
