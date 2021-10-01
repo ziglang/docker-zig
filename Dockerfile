@@ -5,11 +5,12 @@ RUN apk update && \
         curl \
         xz
 
+ARG ZIGVER
 RUN mkdir -p /deps
 WORKDIR /deps
-RUN curl https://ziglang.org/deps/zig+llvm+lld+clang-aarch64-linux-musl-0.8.0-dev.2723+d1f60a63b.tar.xz  -O && \
-    tar xf zig+llvm+lld+clang-aarch64-linux-musl-0.8.0-dev.2723+d1f60a63b.tar.xz && \
-    mv zig+llvm+lld+clang-aarch64-linux-musl-0.8.0-dev.2723+d1f60a63b/ local/
+RUN curl https://ziglang.org/deps/zig+llvm+lld+clang-$(uname -m)-linux-musl-$ZIGVER.tar.xz  -O && \
+    tar xf zig+llvm+lld+clang-$(uname -m)-linux-musl-$ZIGVER.tar.xz && \
+    mv zig+llvm+lld+clang-$(uname -m)-linux-musl-$ZIGVER/ local/
     
 FROM alpine:3.13
 RUN apk --no-cache add \
