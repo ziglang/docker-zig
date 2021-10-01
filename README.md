@@ -11,6 +11,6 @@ build your Zig application, and you definitely do not need this one.
 First, decide whether to bump the base alpine image version. Next:
 
 ```
-docker build -t ziglang/static-base:llvm12-$(uname -m)-1 .
-docker push ziglang/static-base:llvm12-$(uname -m)-1
+docker build -t ziglang/static-base:llvm13-$(uname -m)-1 . --build-arg ZIGVER=0.9.0-dev.1243+456d7e5f5
+docker push ziglang/static-base:llvm13-$(uname -m)-1
 ```
