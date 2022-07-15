@@ -20,3 +20,4 @@ RUN apk --no-cache add \
     git \
     cmake
 COPY --from=builder /deps/local/ /deps/local/
+ENV PATH $PATH:/deps/local/bin
