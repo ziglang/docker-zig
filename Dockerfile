@@ -26,3 +26,4 @@ RUN apk --no-cache add \
     pip3 install s3cmd
 
 COPY --from=builder /deps/local/ /deps/local/
+ENV PATH $PATH:/deps/local/bin
